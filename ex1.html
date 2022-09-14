@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>Задание 1</title>
+        </head>
+        <body>
+            <p style="text-align: center;">
+                Введите ИНН, состоящее из 14 цифр.
+                <br>Первой цифрой должна быть:
+                <br>1 (если вы Женщина)
+                <br>2 (если вы Мужчина)
+            </p>
+            <div style="display: flex;margin: auto;width: 160px;height: 20px">
+                <input type="number" placeholder="XXXXXXXXXXXXXX" style="-moz-appearance: textfield;width: 120px">
+                <button>Add</button>
+            </div>
+            <script>
+                const passportNumber = document.querySelector('input');
+                const addNumber = document.querySelector('button');
+                const validPassportNumber = () => {
+                    const number = passportNumber.value;
+                    const numberExample = /^[1-2]\d{13}$/;
+                    const validNumber = number.match(numberExample);
+                    if (!validNumber) return alert('Error');
+                    alert('Ваш ИНН: ' + number);
+                }
+                addNumber.addEventListener('click',validPassportNumber);
+                passportNumber.addEventListener('keydown', (e) => {
+                    if (e.keyCode === 13) validPassportNumber();
+                })
+            </script>
+        </body>
+    </html>

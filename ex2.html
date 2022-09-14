@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>Задание 2</title>
+        </head>
+        <body>
+            <div style="
+                position: relative;
+                background-color: gray;
+                width: 500px;height: 500px;
+                margin: auto;">
+                <div id="block" style="
+                    position: absolute;
+                    background-color: red;
+                    width: 150px;height: 150px">
+                </div>
+            </div>
+            <div style="
+                margin: 10px auto;
+                width: 500px;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap">
+                <div style="">
+                    <h2 style="width: 100%;">Скорость по оси X</h2>
+                    <button class="plus" style="
+                        width: 45%;
+                        height: 50px;
+                        font-size: 40px;
+                        color: white;
+                        background-color: green">
+                        +
+                    </button>
+                    <button class="minus" style="
+                        width: 45%;
+                        height: 50px;
+                        font-size: 40px;
+                        color: white;
+                        background-color: red">
+                        -
+                    </button>
+                </div>
+                <div>
+                    <h2 style="width: 100%;">Скорость по оси Y</h2>
+                    <button class="plus" style="
+                        width: 45%;
+                        height: 50px;
+                        font-size: 40px;
+                        color: white;
+                        background-color: green">
+                        +
+                    </button>
+                    <button class="minus" style="
+                        width: 45%;
+                        height: 50px;
+                        font-size: 40px;
+                        color: white;
+                        background-color: red">
+                        -
+                    </button>
+                </div>
+            </div>
+
+            <script>
+                const windowBlock = document.querySelector('div');
+                const block = document.querySelector('#block');
+                const plus = document.getElementsByClassName('plus');
+                const minus = document.getElementsByClassName('minus');
+
+                const windowBlockWidth = windowBlock.style.width.match(/\d/g).join('');
+                const blockWidth = block.style.width.match(/\d/g).join('');
+                const maxMovement = windowBlockWidth - blockWidth;
+
+                let animationSpeedX = 0;
+                let animationSpeedY = 0;
+                const blockAnimation= () => {
+                    let moveNumberX = 0;
+                    let moveNumberY = 0;
+                    const moveX = (px,time,me,next,i) => {
+                        if (i === 0) {
+                            if (moveNumberX >= maxMovement)
+                                return next();
+                            moveNumberX += px;
+                            block.style.left = moveNumberX + 'px';
+                        }
+                        if (i === 1) {
+                            if (moveNumberX <= 0)
+                                return next();
+                            moveNumberX -= px;
+                            block.style.left = moveNumberX + 'px';
+                        }
+                        setTimeout(me, time);
+                    }
+                    const moveY = (px,time,me,next,i) => {
+                        if (i === 0) {
+                            if (moveNumberY >= maxMovement)
+                                return next();
+                            moveNumberY += px;
+                            block.style.top = moveNumberY + 'px';
+                        }
+                        if (i === 1) {
+                            if (moveNumberY <= 0)
+                                return next();
+                            moveNumberY -= px;
+                            block.style.top = moveNumberY + 'px';
+                        }
+                        setTimeout(me, time);
+                    }
+                    const toRight = () =>
+                        moveX(animationSpeedX,10,toRight,toLeft,0);
+                    const toLeft = () =>
+                        moveX(animationSpeedX,10,toLeft,toRight,1);
+                    const toTop = () =>
+                        moveY(animationSpeedY,10,toTop,toBottom,0);
+                    const toBottom = () =>
+                        moveY(animationSpeedY,10,toBottom,toTop,1);
+                    toRight();
+                    toTop();
+                }
+                blockAnimation();
+
+                //Здесь четыре раза повторяется код
+                //Но у меня мало времени
+                //Поэтому, оставлю так
+                plus[0].addEventListener('click',() => {
+                    if (animationSpeedX < 30)
+                        animationSpeedX+=5
+                })
+                minus[0].addEventListener('click',() => {
+                    if (animationSpeedX > 0)
+                        animationSpeedX-=5
+                })
+                plus[1].addEventListener('click',() => {
+                    if (animationSpeedY < 30)
+                    animationSpeedY+=5
+                })
+                minus[1].addEventListener('click',() => {
+                    if (animationSpeedY > 0)
+                        animationSpeedY -= 5
+                })
+            </script>
+        </body>
+    </html>
