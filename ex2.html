@@ -13,17 +13,16 @@
                 <div id="block" style="
                     position: absolute;
                     background-color: red;
-                    width: 150px;height: 150px">
-                </div>
+                    width: 150px;height: 150px"></div>
             </div>
             <div style="
                 margin: 10px auto;
                 width: 500px;
                 display: flex;
-                justify-content: space-between;
+                justify-content: center;
                 flex-wrap: wrap">
-                <div style="">
-                    <h2 style="width: 100%;">Скорость по оси X</h2>
+                <div style="width: 50%;display: flex;flex-wrap: wrap;justify-content: center">
+                    <h2 style="width: 100%; text-align: center">Скорость по оси X</h2>
                     <button class="plus" style="
                         width: 45%;
                         height: 50px;
@@ -41,8 +40,26 @@
                         -
                     </button>
                 </div>
-                <div>
-                    <h2 style="width: 100%;">Скорость по оси Y</h2>
+                <div style="width: 25%;display: flex;flex-wrap: wrap;justify-content: center">
+                    <h2 style="width: 100%; text-align: center">Форма</h2>
+                    <button class="figure" style="
+                        background-color: green;
+                        width: 50px;
+                        height: 50px;">
+                    </button>
+                    <button class="figure" style="
+                        background-color: green;
+                        border-radius: 50%;
+                        width: 50px;
+                        height: 50px;">
+                    </button>
+                </div>
+                <div style="width: 25%;display: flex;flex-wrap: wrap;justify-content: center">
+                    <h2 style="width: 100%; text-align: center">Цвет</h2>
+                    <input id="color" type="color" value="#ff0000">
+                </div>
+                <div style="width: 50%;display: flex;flex-wrap: wrap;justify-content: center">
+                    <h2 style="width: 100%; text-align: center">Скорость по оси Y</h2>
                     <button class="plus" style="
                         width: 45%;
                         height: 50px;
@@ -52,6 +69,25 @@
                         +
                     </button>
                     <button class="minus" style="
+                        width: 45%;
+                        height: 50px;
+                        font-size: 40px;
+                        color: white;
+                        background-color: red">
+                        -
+                    </button>
+                </div>
+                <div style="width: 50%;display: flex;flex-wrap: wrap;justify-content: center">
+                    <h2 style="width: 100%;text-align: center">Размер</h2>
+                    <button class="size" style="
+                        width: 45%;
+                        height: 50px;
+                        font-size: 40px;
+                        color: white;
+                        background-color: green">
+                        +
+                    </button>
+                    <button class="size" style="
                         width: 45%;
                         height: 50px;
                         font-size: 40px;
@@ -63,23 +99,35 @@
             </div>
 
             <script>
+                //blocks
                 const windowBlock = document.querySelector('div');
                 const block = document.querySelector('#block');
+
+                //buttons
                 const plus = document.getElementsByClassName('plus');
                 const minus = document.getElementsByClassName('minus');
+                const figure = document.getElementsByClassName('figure');
+                const color = document.querySelector('#color');
+                const size = document.getElementsByClassName('size');
 
-                const windowBlockWidth = windowBlock.style.width.match(/\d/g).join('');
-                const blockWidth = block.style.width.match(/\d/g).join('');
-                const maxMovement = windowBlockWidth - blockWidth;
+                //size
+                const windowBlockGetSize = windowBlock.style.width.match(/\d/g).join('');
+                let blockGetSize = +block.style.width.match(/\d/g).join('');
+                const maxMovement = () => {
+                    return windowBlockGetSize - blockGetSize;
+                }
 
+                //position
                 let animationSpeedX = 0;
                 let animationSpeedY = 0;
+
+                //animation
                 const blockAnimation= () => {
                     let moveNumberX = 0;
                     let moveNumberY = 0;
                     const moveX = (px,time,me,next,i) => {
                         if (i === 0) {
-                            if (moveNumberX >= maxMovement)
+                            if (moveNumberX >= maxMovement())
                                 return next();
                             moveNumberX += px;
                             block.style.left = moveNumberX + 'px';
@@ -94,7 +142,7 @@
                     }
                     const moveY = (px,time,me,next,i) => {
                         if (i === 0) {
-                            if (moveNumberY >= maxMovement)
+                            if (moveNumberY >= maxMovement())
                                 return next();
                             moveNumberY += px;
                             block.style.top = moveNumberY + 'px';
@@ -120,9 +168,7 @@
                 }
                 blockAnimation();
 
-                //Здесь четыре раза повторяется код
-                //Но у меня мало времени
-                //Поэтому, оставлю так
+                //speed click
                 plus[0].addEventListener('click',() => {
                     if (animationSpeedX < 30)
                         animationSpeedX+=5
@@ -139,6 +185,38 @@
                     if (animationSpeedY > 0)
                         animationSpeedY -= 5
                 })
+
+                //size click
+                const setSize = (size) => {
+                    block.style.width = size+'px';
+                    block.style.height = size+'px';
+                }
+                size[0].addEventListener('click',() => {
+                    if (blockGetSize < 425) {
+                        blockGetSize += 25;
+                        setSize(blockGetSize);
+                    }
+                })
+                size[1].addEventListener('click',() => {
+                    if (blockGetSize > 25) {
+                        blockGetSize -= 25;
+                        setSize(blockGetSize);
+                    }
+                })
+
+                //figure
+                figure[0].addEventListener('click',() => {
+                    block.style.borderRadius = '';
+                })
+                figure[1].addEventListener('click',() => {
+                    block.style.borderRadius = '50%';
+                })
+
+                //color
+                const a = () => {
+                    block.style.backgroundColor = color.value;
+                }
+                color.addEventListener('change',a,false)
             </script>
         </body>
     </html>
