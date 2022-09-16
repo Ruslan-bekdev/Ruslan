@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <div style="
+                    position: relative;
+                    background-color: gray;
+                    width: 1000px;height: 1000px;
+                    margin: auto;">
+            <div id="block" style="
+                position: absolute;
+                background-color: red;
+                width: 150px;height: 150px"></div>
+        </div>
+        <script>
+            //blocks
+            const windowBlock = document.querySelector('div');
+            const block = document.querySelector('#block');
+
+            //size
+            const windowBlockGetSize = windowBlock.style.width.match(/\d/g).join('');
+            let blockGetSize = +block.style.width.match(/\d/g).join('');
+            const maxMovement = () => {
+                return windowBlockGetSize - blockGetSize;
+            }
+
+            //position
+            let positionX = 0;
+            let positionY = 0;
+
+            const move = () => {
+                const again = () => setTimeout(move,10);
+                const moveX = (toDo,px) => {
+                    if (toDo === '+') positionX += px;
+                    if (toDo === '-') positionX -= px;
+                    block.style.left = `${positionX}px`
+                }
+                const moveY = (toDo,px) => {
+                    if (toDo === '+') positionY += px;
+                    if (toDo === '-') positionY -= px;
+                    block.style.top = `${positionY}px`
+                }
+                if (positionX < maxMovement() && positionY === 0){
+                    moveX('+',10);
+                    return again();
+                }
+                if (positionX === maxMovement() && positionY < maxMovement()){
+                    moveY('+',10);
+                    return again();
+                }
+                if (positionX > 0 && positionY > 0){
+                    moveX('-',10);
+                    return again();
+                }
+                if (positionX === 0 && positionY > 0){
+                    moveY('-',10);
+                    return again();
+                }
+            }
+            move();
+        </script>
+    </body>
+    </html>
