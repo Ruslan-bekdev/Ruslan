@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Conventer</title>
+        <style>
+            .wrapper {
+                width: 300px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                margin: auto;
+            }
+            div:not(.wrapper){
+                flex: 0 100px;
+                margin-bottom: 15px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="KGS">
+                <label for="KGS">KGS (Сом)</label>
+                <input id="KGS" type="number">
+            </div>
+            <div class="USD">
+                <label for="USD">USD (Доллар)</label>
+                <input id="USD" type="number">
+            </div>
+            <div class="EURO">
+                <label for="EURO">EURO (Евро)</label>
+                <input id="EURO" type="number">
+            </div>
+            <div class="RUB">
+                <label for="RUB">RUB (Рубль)</label>
+                <input id="RUB" type="number">
+            </div>
+            <div class="KZT">
+                <label for="KZT">KZT (Тенге)</label>
+                <input id="KZT" type="number">
+            </div>
+            <div class="UAH">
+                <label for="UAH">UAH (Гривна)</label>
+                <input id="UAH" type="number">
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
