@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>fetch запрос</title>
+    </head>
+    <body>
+        <script>
+            fetch("https://jsonplaceholder.typicode.com/todos/13")
+                .then(data => data.json())
+                .then(jsonData => console.log(jsonData))
+                .catch(() => console.log('Error'))
+        </script>
+    </body>
+</html>
